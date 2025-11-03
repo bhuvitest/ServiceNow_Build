@@ -19,7 +19,7 @@ public class ExecutableXml {
 		test.setName("Test");
 		List<XmlClass> classes = new ArrayList<XmlClass>();
 		
-		classes.add(new XmlClass("buildVersion.CredentialsCheck"));
+		classes.add(new XmlClass("bulidVersionOne.CredentialsCheck"));
 
 		test.setXmlClasses(classes) ;
 		
