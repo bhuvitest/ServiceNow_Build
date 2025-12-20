@@ -12,30 +12,59 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import io.github.sukgu.Shadow;
 
 public class CredentialsCheck {
-	
-	
-	
 	public  ChromeDriver driver;
-	@Test(priority = 1)
-	public void runBuildBhuvanesh() throws InterruptedException {
+	
+	@DataProvider(name="fetchData")
+	public String [][] setData() {
+		String [][] data = new String[3][5];
+		// Bhuvanesh
+		data[0][0]="https://dev300891.service-now.com/";
+		data[0][1]="admin";
+		data[0][2]="03-xMN$nqSmU";
+		data[0][3]="bhuvanesh.moorthy@testleaf.com";
+		data[0][4]="Qeagle@2025";
+		// seenivasan
+		data[1][0]="https://dev181504.service-now.com/";
+		data[1][1]="admin";
+		data[1][2]="F/*jyM6Q6pHh";
+		data[1][3]="seenivasan.shanmugam@testleaf.com";
+		data[1][4]="Ss@120508";
+		
+		// Harrish
+		
+		data[2][0]="https://dev353629.service-now.com/";
+		data[2][1]="admin";
+		data[2][2]="jO2/kVIsw^V3";
+		data[2][3]="harrish.alaguponniah@testleaf.com";
+		data[2][4]="Harri123@";
+		
+		return data;
+	}
+	
+	
+	
+	
+	@Test(dataProvider = "fetchData")
+	public void runBuildBhuvanesh(String url,String uname, String pword,String mid,String mpword) throws InterruptedException {
 
 		driver = new ChromeDriver();
 		Wait<ChromeDriver> wait = new FluentWait<>(driver)
 		        .withTimeout(Duration.ofSeconds(300))   // hibernation can take time
-		        .pollingEvery(Duration.ofSeconds(10))
+		        .pollingEvery(Duration.ofSeconds(30))
 		        .ignoring(NoSuchElementException.class)
 		        .ignoring(StaleElementReferenceException.class);
 		driver.manage().window().maximize();
-		driver.get("https://dev300891.service-now.com/");
+		driver.get(url);
 		try {
 			
-			driver.findElement(By.xpath("//input[@id='user_name']")).sendKeys("admin");
-			driver.findElement(By.xpath("//input[@id='user_password']")).sendKeys("03-xMN$nqSmU");
+			driver.findElement(By.xpath("//input[@id='user_name']")).sendKeys(uname);
+			driver.findElement(By.xpath("//input[@id='user_password']")).sendKeys(pword);
 			WebElement login = driver.findElement(By.xpath("//button[text()='Log in']"));
 			login.click();
 			 driver.quit();
@@ -48,12 +77,12 @@ public class CredentialsCheck {
 			            .elementToBeClickable(By.xpath("//button[contains(text(),'Sign in')]")))
 			            .click();
 
-			    sh.setImplicitWait(15);
-			    sh.findElementByXPath("//span[text()='Sign in']").click();
+			    sh.setImplicitWait(30);
+			    sh.findElementByXPath("//*[text()='Sign In']").click();
 
 			    wait.until(ExpectedConditions.visibilityOfElementLocated(
 			            By.xpath("//input[@name='username']")))
-			            .sendKeys("bhuvanesh.moorthy@testleaf.com");
+			            .sendKeys(mid);
 
 			    wait.until(ExpectedConditions.elementToBeClickable(
 			            By.xpath("//button[@type='submit']")))
@@ -61,10 +90,10 @@ public class CredentialsCheck {
 
 			    wait.until(ExpectedConditions.visibilityOfElementLocated(
 			            By.xpath("//input[@name='password']")))
-			            .sendKeys("Qeagle@2025");
+			            .sendKeys(mpword);
 
 			    driver.findElement(By.xpath("//button[@type='submit']")).click();
-			    
+			    Thread.sleep(60000);
 			    WebElement onlineStatus = wait.until(driver -> {
 			        WebElement el = sh.findElementByXPath("//span[text()='Online']");
 			        return el.isDisplayed() ? el : null;
@@ -75,10 +104,10 @@ public class CredentialsCheck {
 			} else {
 			    // Normal login flow
 			    wait.until(ExpectedConditions.visibilityOfElementLocated(
-			            By.id("user_name"))).sendKeys("admin");
+			            By.id("user_name"))).sendKeys(uname);
 
 			    driver.findElement(By.id("user_password"))
-			            .sendKeys("03-xMN$nqSmU");
+			            .sendKeys(pword);
 
 			    driver.findElement(By.xpath("//button[text()='Log in']")).click();
 			    
@@ -88,19 +117,5 @@ public class CredentialsCheck {
 			}
 	}
 	
-	@Test(priority = 2)
-	public void runBuildSeeni() {
-
-	     driver = new ChromeDriver();
-		driver.get("https://dev181504.service-now.com/");
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
-		driver.findElement(By.xpath("//input[@id='user_name']")).sendKeys("admin");
-		driver.findElement(By.xpath("//input[@id='user_password']")).sendKeys("F/*jyM6Q6pHh");
-		WebElement login = driver.findElement(By.xpath("//button[text()='Log in']"));
-		login.click();
-		driver.quit();
-
-	}
 
 }
