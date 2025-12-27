@@ -8,6 +8,7 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -53,7 +54,27 @@ public class CredentialsCheck {
 	@Test(dataProvider = "fetchData")
 	public void runBuildBhuvanesh(String url,String uname, String pword,String mid,String mpword) throws InterruptedException {
 
-		driver = new ChromeDriver();
+		ChromeOptions options = new ChromeOptions();
+
+		options.addArguments(
+		    "--start-maximized",
+		    "--disable-notifications",
+		    "--disable-infobars",
+		    "--disable-extensions",
+		    "--disable-gpu",
+		    "--no-sandbox",
+		    "--disable-dev-shm-usage",
+		    "--disable-web-security",
+		    "--disable-features=IsolateOrigins,site-per-process",
+		    "--headless=new",
+		    "--window-size=1920,1080"
+		);
+
+		
+
+
+				
+		driver = new ChromeDriver(options);
 		Wait<ChromeDriver> wait = new FluentWait<>(driver)
 		        .withTimeout(Duration.ofSeconds(300))   // hibernation can take time
 		        .pollingEvery(Duration.ofSeconds(30))
